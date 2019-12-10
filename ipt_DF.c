@@ -22,7 +22,7 @@ static unsigned int df_tg(struct sk_buff *skb, const struct xt_action_param *par
 	df_mode mode = ((struct xt_df_tginfo *)(param->targinfo))->mode;
 	__u16 old_frag_off, new_frag_off;
 
-	if (!skb_make_writable(skb, skb->len)){
+	if (!skb_ensure_writable(skb, sizeof(struct iphdr))){
 		printk(KERN_ERR "DF: Error making skb writable\n");
 		return NF_DROP;
 	}
