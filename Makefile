@@ -1,7 +1,7 @@
 obj-m += ipt_DF.o
 #IPT_CFLAGS = -fPIC -Wall -Wextra -pedantic
 IPT_CFLAGS = -fPIC
-IPTABLES_VERSION = 1.4.21
+IPTABLES_VERSION = 1.6.2
 
 all: kernel-module iptables-module
 
