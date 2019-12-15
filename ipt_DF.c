@@ -18,14 +18,16 @@ static int df_tg_check(const struct xt_tgchk_param *param)
 static unsigned int df_tg(struct sk_buff *skb, const struct xt_action_param *param)
 {
 	__u32 check;
-	struct iphdr *iph = ip_hdr(skb);
+	struct iphdr *iph = NULL;
 	df_mode mode = ((struct xt_df_tginfo *)(param->targinfo))->mode;
 	__u16 old_frag_off, new_frag_off;
 
+	/* make_writable might invoke copy-on-write, so fetch iph afterwards */
 	if (!skb_make_writable(skb, sizeof(struct iphdr))){
 		printk(KERN_ERR "DF: Error making skb writable\n");
 		return NF_DROP;
 	}
+	iph = ip_hdr(skb);
 
 	new_frag_off = old_frag_off = ntohs(iph->frag_off);
 
