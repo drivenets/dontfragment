@@ -23,7 +23,7 @@ static unsigned int df_tg(struct sk_buff *skb, const struct xt_action_param *par
 	__u16 old_frag_off, new_frag_off;
 
 	/* make_writable might invoke copy-on-write, so fetch iph afterwards */
-	if (!skb_make_writable(skb, sizeof(struct iphdr))){
+	if (skb_ensure_writable(skb, sizeof(struct iphdr))){
 		printk(KERN_ERR "DF: Error making skb writable\n");
 		return NF_DROP;
 	}

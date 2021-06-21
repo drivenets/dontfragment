@@ -1,7 +1,7 @@
 obj-m += ipt_DF.o
 #IPT_CFLAGS = -fPIC -Wall -Wextra -pedantic
 IPT_CFLAGS = -fPIC
-IPTABLES_VERSION = 1.6.2
+IPTABLES_VERSION = 1.8.4
 
 all: kernel-module iptables-module
 
@@ -13,7 +13,6 @@ iptables-$(IPTABLES_VERSION): iptables-$(IPTABLES_VERSION).tar.bz2
 
 iptables-$(IPTABLES_VERSION).tar.bz2:
 	wget http://www.netfilter.org/projects/iptables/files/iptables-$(IPTABLES_VERSION).tar.bz2
-	md5sum -c iptables-$(IPTABLES_VERSION).tar.bz2.md5 || (rm -f iptables-$(IPTABLES_VERSION).tar.bz2 && exit 1)
 
 kernel-module:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
